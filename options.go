@@ -120,6 +120,14 @@ func From(typ interface{}) interface{} {
 	}).Interface()
 }
 
+// Populate directly uses fx.Populate and bind it onto a Invoke key
+func Populate(key Invoke, target ...interface{}) Option {
+	return func(s *Settings) error {
+		s.invokes[key] = fx.Populate(target...)
+		return nil
+	}
+}
+
 // from go-ipfs
 // as casts input constructor to a given interface (if a value is given, it
 // wraps it into a constructor).
